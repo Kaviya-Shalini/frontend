@@ -1,0 +1,233 @@
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: white;
+}
+
+/* Sidebar */
+app-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+  background: #1e293b;
+}
+.layout.sidebar-closed app-sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Delete Container */
+.delete-container {
+  flex: 1;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.delete-header {
+  text-align: center;
+  margin-bottom: 25px;
+  animation: fadeInDown 0.6s ease;
+}
+.delete-header h1 {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+.delete-header .sub {
+  font-size: 16px;
+  color: #64748b;
+}
+.btn.back {
+  margin-top: 14px;
+  background: #e2e8f0;
+  color: #1e293b;
+  transition: all 0.3s ease;
+}
+.btn.back:hover {
+  background: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+/* Actions */
+.delete-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.btn.danger {
+  background: linear-gradient(135deg, #a62c2c, #ef4444);
+  color: white;
+}
+.btn.warn {
+  background: linear-gradient(135deg, #6c1d67, #610b55);
+  color: white;
+}
+.btn.primary {
+  background: linear-gradient(135deg, #26426e, #0c1e51);
+  color: white;
+}
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Panel */
+.panel {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  width: 100%;
+  max-width: 840px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  margin-bottom: 25px;
+  transition: transform 0.3s ease;
+}
+.panel:hover {
+  transform: translateY(-4px);
+}
+.panel h2 {
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Search */
+.search-box {
+  width: 95%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 18px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+.search-box:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+}
+
+/* Table */
+.shared-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.shared-table th,
+.shared-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.2s ease;
+}
+.shared-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  text-align: left;
+}
+.shared-table tr:hover td {
+  background: #f9fafb;
+}
+.shared-table td {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+.pagination button {
+  border: none;
+  background: #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+.pagination button.active {
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+}
+.pagination button:hover {
+  background: #cbd5e1;
+  transform: scale(1.05);
+}
+.dots {
+  color: #6b7280;
+  font-weight: bold;
+}
+
+/* Toast - Top with animation */
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: #1e293b;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.toast.success { background: linear-gradient(135deg, #22c55e, #15803d); }
+.toast.error { background: linear-gradient(135deg, #ef4444, #991b1b); }
+.toast.info { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+/* Empty State */
+.empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 15px;
+  padding: 15px;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .delete-header h1 { font-size: 24px; }
+  .delete-actions { flex-direction: column; align-items: stretch; }
+  .panel { padding: 18px; }
+}

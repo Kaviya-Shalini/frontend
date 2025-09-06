@@ -1,0 +1,123 @@
+<div class="layout" [class.sidebar-closed]="isSidebarClosed">
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="delete-container">
+    <!-- Toast at Top -->
+    <div
+      class="toast top"
+      [class.show]="toastMsg"
+      [class.success]="toastType==='success'"
+      [class.error]="toastType==='error'"
+      [class.info]="toastType==='info'">
+      {{ toastMsg }}
+    </div>
+
+    <!-- Header -->
+    <div class="delete-header">
+      <h1>Delete File</h1>
+      <p class="sub">Choose how you want to delete this file (ID: {{ fileId }})</p>
+      <button class="btn back" (click)="goBackToWallet()">← Back to Wallet</button>
+
+    </div>
+
+    <!-- Delete Actions -->
+    <div class="delete-actions">
+      <button class="btn danger" (click)="deleteForMe()" [disabled]="isLoading">
+        Delete for Me
+      </button>
+      <button class="btn warn" (click)="deleteForEveryone()" [disabled]="isLoading">
+        Delete for Everyone
+      </button>
+      <button class="btn primary" (click)="deleteForSelectedUsers()" [disabled]="isLoading || selected.size === 0">
+        Delete for Selected Users ({{ selected.size }})
+      </button>
+    </div>
+
+    <!-- Selected Users Table -->
+    <div class="panel" *ngIf="selected.size > 0">
+      <h2>Selected Users</h2>
+      <table class="shared-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Selected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of selectedArray">
+            <td>{{ u }}</td>
+            <td>
+              <input type="checkbox" checked (change)="removeChip(u)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="link" (click)="clearSelections()">Clear All</button>
+    </div>
+
+    <!-- Recipients Table -->
+    <div class="panel">
+      <h2>People You Shared With</h2>
+
+      <!-- Search -->
+      <input
+        type="text"
+        placeholder="Search by username..."
+        class="search-box"
+        [(ngModel)]="searchQuery"
+      />
+
+      <div class="loading" *ngIf="isLoading">Loading...</div>
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <table class="shared-table" *ngIf="!isLoading && filteredUsernames().length > 0">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let name of filteredUsernames()">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="isChecked(name)"
+                (change)="toggle(name)"
+              />
+            </td>
+            <td>{{ name }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty" *ngIf="!isLoading && filteredUsernames().length === 0">
+        No recipients found.
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button (click)="goToPage(1)" [disabled]="pageNumber === 1">«</button>
+        <button (click)="prevPage()" [disabled]="pageNumber === 1">‹</button>
+
+        <ng-container *ngFor="let page of paginationRange()">
+          <button
+            *ngIf="page !== '...'; else dots"
+            [class.active]="isActivePage(page)"
+            (click)="onPageClick(page)"
+          >
+            {{ page }}
+          </button>
+          <ng-template #dots>
+            <span class="dots">...</span>
+          </ng-template>
+        </ng-container>
+
+        <button (click)="nextPage()" [disabled]="pageNumber >= totalPages">›</button>
+        <button (click)="goToPage(totalPages)" [disabled]="pageNumber >= totalPages">»</button>
+      </div>
+    </div>
+  </div>
+</div>

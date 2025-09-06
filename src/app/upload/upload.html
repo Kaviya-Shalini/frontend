@@ -1,0 +1,144 @@
+<div class="layout" [class.sidebar-closed]="isSidebarClosed">
+      <!-- Hamburger Icon -->
+      <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Sidebar -->
+      <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+      <!-- Main Content -->
+      <div class="content">
+        <h1 class="page-title">📤 Upload Files</h1>
+        <p class="quote">"Your uploaded files are safe with us."</p>
+
+        <div class="upload-card">
+          <h2 class="section-title">Choose Document</h2>
+
+          <!-- Drag and Drop / Browse -->
+          <div
+            class="dropzone"
+            (drop)="onFileDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+          >
+            <div class="dropzone-head">
+              <p *ngIf="!selectedFiles.length" class="drop-hint">
+                Drag & Drop your files here or
+                <label for="fileInput" class="browse-link">Browse</label>
+              </p>
+
+              <div class="actions" *ngIf="selectedFiles.length">
+                <span class="count-chip">{{ selectedFiles.length }} file(s) selected</span>
+                <button type="button" class="clear-all" (click)="clearAll()">Clear All</button>
+              </div>
+            </div>
+
+            <!-- File list (scrollable area only for files) -->
+            <div *ngIf="selectedFiles.length" class="file-list">
+              <div
+                *ngFor="let file of selectedFiles; let i = index; trackBy: trackByIndex"
+                class="file-row"
+              >
+                <div class="file-name">
+                  <span class="file-pin">📌</span>
+                  <span class="file-original" [title]="file.name">{{ file.name }}</span>
+                </div>
+                <div class="file-controls">
+                  <input
+                    type="text"
+                    class="filename-input"
+                    [(ngModel)]="manualFileNames[i]"
+                    [placeholder]="file.name"
+                  />
+                  <button type="button" class="remove-file" (click)="removeFile(i)">
+                    ❌ Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hidden file input -->
+            <input
+              #fileInputRef
+              id="fileInput"
+              type="file"
+              multiple
+              (change)="onFileSelect($event)"
+              hidden
+            />
+          </div>
+
+          <!-- Description -->
+          <div *ngIf="selectedFiles.length" class="file-description">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              [(ngModel)]="description"
+              placeholder="Add description for the files"
+            ></textarea>
+          </div>
+
+          <!-- Category Dropdown -->
+          <div *ngIf="selectedFiles.length" class="category-section">
+            <label for="category">Select Category</label>
+            <select id="category" [(ngModel)]="selectedCategory">
+              <option value="" disabled selected>Select category</option>
+              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+
+          <!-- Custom Category Input -->
+          <div *ngIf="selectedCategory === 'other'" class="category-section">
+            <label for="customCategory">Enter Custom Category</label>
+            <input
+              id="customCategory"
+              [(ngModel)]="customCategory"
+              placeholder="Type your category here"
+              [class.invalid]="submitted && !customCategory.trim()"
+            />
+            <div class="error-inline" *ngIf="submitted && !customCategory.trim()">
+              Enter your custom category to upload
+            </div>
+          </div>
+
+          <!-- Global error (fallback) -->
+          <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+          <!-- Submit Button -->
+          <button
+            class="btn-upload"
+            [disabled]="!selectedFiles.length || !selectedCategory"
+            (click)="onUpload()"
+          >
+            🚀 Upload File(s)
+          </button>
+
+          <!-- Upload Messages -->
+          <p *ngIf="uploadMessage" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
+            {{ uploadMessage }}
+          </p>
+        </div>
+      </div>
+       <!-- 🟢 Help Icon -->
+<div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">
+  ❔
+</div>
+
+<!-- 🟢 Guide Overlay -->
+<div class="guide-overlay" *ngIf="showGuide">
+  <div class="guide-box">
+    <h2>{{ steps[currentStep].title }}</h2>
+    <p>{{ steps[currentStep].text }}</p>
+
+    <div class="guide-buttons">
+      <button (click)="prevStep()" [disabled]="currentStep === 0"> Back</button>
+      <button (click)="nextStep()">
+        {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+      </button>
+    </div>
+    <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+  </div>
+</div>
+
+    </div>

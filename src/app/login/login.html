@@ -1,0 +1,46 @@
+
+ <section class="card">
+      <div class="header">
+        <h1>Welcome back</h1>
+        <p>Sign in to your account</p>
+      </div>
+
+      <form (ngSubmit)="submit()" #f="ngForm">
+        <div style="display:grid; gap:10px;margin-top:8px">
+          <input
+            class="input"
+            name="username"
+            [(ngModel)]="username"
+            type="text"
+            placeholder="Username"
+            required
+          />
+          <input
+            class="input"
+            name="password"
+            [(ngModel)]="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+
+          <!-- Sign In button with spinner -->
+          <button class="btn" type="submit" [disabled]="loading">
+            <span *ngIf="!loading">Sign In</span>
+            <span *ngIf="loading" class="spinner"></span>
+          </button>
+
+          <!-- Forgot links inline -->
+          <div class="forgot-links">
+            <a routerLink="/forgot-password">Forgot Password?</a>
+            <span>|</span>
+            <a routerLink="/forgot-username">Forgot Username?</a>
+          </div>
+        </div>
+      </form>
+
+      <div class="footer small" style="margin-top:12px">
+        No account? <a routerLink="/register">Create one</a>
+      </div>
+      <div *ngIf="error" class="error" style="margin-top:8px">{{ error }}</div>
+    </section>

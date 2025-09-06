@@ -1,0 +1,96 @@
+ <div class="layout" [class.sidebar-closed]="isSidebarClosed">
+      <!-- Hamburger -->
+      <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Sidebar -->
+      <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+      <!-- Main Content -->
+      <div class="content">
+        <h1 class="page-title">Shared Files</h1>
+        <p class="quote">"Here are the files shared between users."</p>
+
+        <!-- Search + Filters -->
+        <div class="toolbar">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="searchFilesWithPagination()"
+            placeholder="Search by receiver, filename or category..."
+          />
+
+          <div class="filters">
+            <button [class.active]="filterType === 'all'" (click)="setFilter('all')">All</button>
+            <button [class.active]="filterType === 'sensitive'" (click)="setFilter('sensitive')">
+              List 1
+            </button>
+            <button
+              [class.active]="filterType === 'insensitive'"
+              (click)="setFilter('insensitive')"
+            >
+              List 2
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Grid -->
+        <div class="card-grid">
+          <div class="file-card" *ngFor="let file of filteredFiles" #cardEl>
+            <h3>{{ file.filename }}</h3>
+            <p><strong>Sender:</strong> {{ file.senderName }}</p>
+            <p><strong>Receiver:</strong> {{ file.recipientName }}</p>
+            <p><strong>Category:</strong> {{ file.category }}</p>
+            <p>
+              <strong>Filter:</strong>
+              <span [class.sensitive]="file.isSensitive" [class.insensitive]="!file.isSensitive">
+                {{ file.isSensitive ? 'List 1' : 'List 2' }}
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="pagination">
+          <button (click)="goToPage(0)" [disabled]="currentPage === 0">«</button>
+          <button (click)="prevPage()" [disabled]="currentPage === 0">‹</button>
+
+          <ng-container *ngFor="let page of paginationRange()">
+            <!-- Only render a button for numeric pages -->
+            <button
+              *ngIf="page !== '...'; else dots"
+              [class.active]="isActivePage(page)"
+              (click)="onPageClick(page)"
+            >
+              {{ page }}
+            </button>
+            <ng-template #dots>
+              <span class="dots">...</span>
+            </ng-template>
+          </ng-container>
+
+          <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">›</button>
+          <button (click)="goToPage(totalPages - 1)" [disabled]="currentPage + 1 >= totalPages">
+            »
+          </button>
+        </div>
+      </div>
+      <!-- 🟢 Help Icon -->
+<div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">
+  ❔
+</div>
+
+<!-- 🟢 Guide Overlay -->
+<div class="guide-overlay" *ngIf="showGuide">
+  <div class="guide-box">
+    <h2>{{ steps[currentStep].title }}</h2>
+    <p>{{ steps[currentStep].text }}</p>
+
+    <div class="guide-buttons">
+      <button (click)="prevStep()" [disabled]="currentStep === 0"> Back</button>
+      <button (click)="nextStep()">
+        {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+      </button>
+    </div>
+    <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+  </div>
+    </div>

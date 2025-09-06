@@ -1,0 +1,114 @@
+<div class="layout" [class.sidebar-closed]="isSidebarClosed">
+  <!-- Hamburger -->
+  <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+  <!-- Wallet Content -->
+  <div class="wallet-container">
+    <!-- Header -->
+    <div class="wallet-header">
+      <h1 class="wallet-title">My Wallet</h1>
+      <p class="wallet-subtitle">"All your uploaded documents are here."</p>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="searchFilesWithPagination()"
+        placeholder="Search by filename, category or description..."
+        class="wallet-search"
+      />
+    </div>
+
+    <!-- Wallet Cards -->
+    <div class="wallet-grid">
+      <div
+        class="wallet-card"
+        *ngFor="let file of files"
+        #cardEl
+        [class.active]="selectedCard?.id === file.id"
+        (click)="selectCard(file)"
+      >
+        <div class="card-content">
+          <p><strong>Name:</strong> {{ file.filename }}</p>
+          <p><strong>Description:</strong> {{ file.description }}</p>
+          <p><strong>Category:</strong> {{ file.category }}</p>
+        </div>
+
+        <!-- Card Actions -->
+        <div class="card-actions">
+          <ng-container *ngIf="downloadOptionsFor !== file.id; else downloadOpts">
+            <button class="btn btn-download" (click)="toggleDownloadOptions(file, $event)">
+              Download
+            </button>
+          </ng-container>
+
+          <ng-template #downloadOpts>
+            <div class="download-options">
+              <button class="btn btn-encrypted" (click)="downloadEncrypted(file, $event)">
+                Encrypted
+              </button>
+              <button class="btn btn-decrypted" (click)="downloadDecrypted(file, $event)">
+                Decrypted
+              </button>
+            </div>
+          </ng-template>
+
+          <button class="btn btn-share" (click)="shareFile(file, $event)">Share</button>
+          <button class="btn btn-delete" (click)="deleteFile(file, $event)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button (click)="goToPage(0)" [disabled]="currentPage === 0">«</button>
+      <button (click)="prevPage()" [disabled]="currentPage === 0">‹</button>
+
+      <ng-container *ngFor="let page of paginationRange()">
+        <button
+          *ngIf="page !== '...'; else dots"
+          [class.active]="isActivePage(page)"
+          (click)="onPageClick(page)"
+        >
+          {{ page }}
+        </button>
+        <ng-template #dots>
+          <span class="dots">...</span>
+        </ng-template>
+      </ng-container>
+
+      <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">›</button>
+      <button (click)="goToPage(totalPages - 1)" [disabled]="currentPage + 1 >= totalPages">
+        »
+      </button>
+    </div>
+  </div>
+
+  <!-- Guide Icon -->
+  <div
+    class="guide-icon"
+    title="Click here to view the user guide for this page"
+    (click)="openGuide()"
+  >
+    ❔
+  </div>
+
+  <!-- Guide Overlay -->
+  <div class="guide-overlay" *ngIf="showGuide">
+    <div class="guide-box">
+      <h2>{{ steps[currentStep].title }}</h2>
+      <p>{{ steps[currentStep].text }}</p>
+
+      <div class="guide-buttons">
+        <button (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
+        <button (click)="nextStep()">
+          {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+        </button>
+      </div>
+      <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+ <div class="layout" [class.sidebar-closed]="isSidebarClosed">
+      <!-- Hamburger (shows only when sidebar collapsed) -->
+      <button
+        class="hamburger"
+        *ngIf="isSidebarClosed"
+        (click)="toggleSidebar()"
+        aria-label="Open sidebar"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Sidebar -->
+      <app-sidebar #sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+      <!-- Content -->
+      <div class="content">
+        <h1 class="page-title">Share File</h1>
+        <p class="quote">
+          “Choose filter of your choice & recipient. We’ll handle the rest securely.”
+        </p>
+
+        <!-- File info -->
+        <div class="file-info" *ngIf="fileId">
+          You are about to share <strong>File ID: {{ fileId }}</strong>
+        </div>
+
+        <!-- Card -->
+        <form
+          #shareForm="ngForm"
+          (ngSubmit)="onShare(shareForm)"
+          novalidate
+          class="card"
+          [class.loading]="loading"
+        >
+          <div class="field">
+            <label class="label" for="recipient">Recipient Username</label>
+            <input
+              id="recipient"
+              type="text"
+              name="recipientUsername"
+              [(ngModel)]="recipientUsername"
+              required
+              autocomplete="username"
+              placeholder="e.g., KAVIYA"
+              [disabled]="loading"
+            />
+            <div class="hint" *ngIf="shareForm.submitted && !recipientUsername">
+              Recipient username is required
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="label">You can Filter your data based on the list</span>
+            <div class="radio-group">
+              <label class="radio-pill" [class.active]="isSensitive === true">
+                <input
+                  type="radio"
+                  name="sensitivity"
+                  [value]="true"
+                  [(ngModel)]="isSensitive"
+                  [disabled]="loading"
+                />
+                <div class="pill-icon">📄</div>
+                <div class="pill-text">
+                  <div class="pill-title">List 1</div>
+                  <!-- <div class="pill-sub">Stricter controls & tracking</div> -->
+                </div>
+              </label>
+
+              <label class="radio-pill" [class.active]="isSensitive === false">
+                <input
+                  type="radio"
+                  name="sensitivity"
+                  [value]="false"
+                  [(ngModel)]="isSensitive"
+                  [disabled]="loading"
+                />
+                <div class="pill-icon">📄</div>
+                <div class="pill-text">
+                  <div class="pill-title">List2</div>
+                  <!-- <div class="pill-sub">Standard sharing</div> -->
+                </div>
+              </label>
+            </div>
+            <div class="hint" *ngIf="shareForm.submitted && isSensitive === null">
+              Choose sensitivity
+            </div>
+          </div>
+
+          <!-- JWT Cookie status -->
+          <!-- <div class="cookie-status" [class.ok]="hasJwt" [class.bad]="!hasJwt">
+            <span class="dot"></span>
+            JWT cookie: <strong>{{ hasJwt ? 'found' : 'missing' }}</strong>
+          </div> -->
+
+          <button class="btn" type="submit" [disabled]="loading || !canSubmit()">
+            <span *ngIf="!loading">Share</span>
+            <span *ngIf="loading" class="spinner"></span>
+          </button>
+
+          <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+          <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+        </form>
+
+        <div class="actions-row">
+  <button class="btn-secondary" (click)="goBack()">
+    Back to Wallet
+  </button>
+  <button class="btn-primary" (click)="viewShared()">
+    View Shared Files
+  </button>
+</div>
+
+      </div>
+    </div>

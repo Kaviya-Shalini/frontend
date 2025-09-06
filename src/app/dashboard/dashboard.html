@@ -1,0 +1,229 @@
+<div class="layout" [class.sidebar-closed]="isSidebarClosed">
+  <!-- Hamburger (only if sidebar is closed) -->
+  <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="quote">"Overview of your uploads and stats"</p>
+
+    <div class="dashboard">
+      <!-- Row 1 -->
+      <div class="row">
+        <div class="card flex-2">
+          <h3>📈 Uploads Summary</h3>
+          <canvas
+            baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="'line'"
+          ></canvas>
+        </div>
+        <div class="card flex-1">
+          <h3>📂 Category Distribution</h3>
+          <canvas
+            baseChart
+            [data]="doughnutChartData"
+            [options]="doughnutChartOptions"
+            [type]="'doughnut'"
+          ></canvas>
+          <div class="category-grid">
+            <div
+              class="category-item"
+              *ngFor="let cat of categoryStats; let i = index"
+            >
+              <span
+                class="category-color"
+                [style.background]="chartColors[i]"
+              ></span>
+              <span>{{ cat.label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row">
+        <div class="card flex-1">
+          <h3>📑 Recent Uploads</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Category</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let file of recentUploads">
+                <td>{{ trimFilename(file.name) }}</td>
+                <td>{{ file.category }}</td>
+                <td>{{ file.date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card flex-1">
+          <h3>📊 Uploads by Category</h3>
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="'bar'"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row">
+        <div class="card flex-2">
+          <h3>🔵 Circular Stats</h3>
+          <div class="circle-row">
+            <div class="circle-card" *ngFor="let cat of categoryStats">
+              <div class="circle">{{ cat.value }}</div>
+              <p>{{ cat.label }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card flex-1">
+          <h3>🔥 Most Uploaded Trend</h3>
+          <canvas
+            baseChart
+            [data]="miniLineChartData"
+            [options]="miniLineChartOptions"
+            [type]="'line'"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🟢 Help Icon -->
+  <div
+    class="guide-icon"
+    title="Click here to view the user guide for this page"
+    (click)="openGuide()"
+  >
+    ❔
+  </div>
+
+  <!-- 🟢 Education Icon with Suggestion -->
+  <div class="education-wrapper">
+    <div
+      class="education-icon"
+      title="Click here to learn about cybersecurity & app security"
+      (click)="openEducation()"
+    >
+      📘
+    </div>
+
+    <!-- Tooltip suggestion -->
+    <div class="edu-suggestion" *ngIf="showEduSuggestion">
+      📘 You are advised to read this User Education
+      <span class="arrow"></span>
+    </div>
+  </div>
+
+  <!-- 🟢 Guide Overlay -->
+  <div class="guide-overlay" *ngIf="showGuide">
+    <div class="guide-box">
+      <h2>{{ steps[currentStep].title }}</h2>
+      <p>{{ steps[currentStep].text }}</p>
+
+      <div class="guide-buttons">
+        <button (click)="prevStep()" [disabled]="currentStep === 0">
+           Back
+        </button>
+        <button (click)="nextStep()">
+          {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+        </button>
+      </div>
+      <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+    </div>
+  </div>
+
+  <!-- 🔵 User Education Overlay -->
+  <div class="education-overlay" *ngIf="showEducation">
+    <div class="education-box">
+      <!-- Close button (fixed so always visible) -->
+      <button class="close-edu" (click)="closeEducation()">✖</button>
+      <h2>📘 User Education</h2>
+
+      <div class="edu-content">
+        <h3>🌍 Why we created this app?</h3>
+        <p>
+          We live in a digital world where your <b>data</b> is your identity.
+          Keeping it safe is critical.
+        </p>
+
+        <h3>🔐 What is Cybersecurity?</h3>
+        <p>
+          Cybersecurity means protecting your files, privacy, and identity from
+          unauthorized access 👨‍💻.
+        </p>
+
+        <h3>🛡 Why is it important?</h3>
+        <p>
+          Hackers 🕵️ can misuse your files. This app ensures <b>only you</b> and
+          those you trust can view your files.
+        </p>
+
+        <h3>⚡ How this app safeguards you?</h3>
+        <ul>
+          <li>🔑 <b>Hybrid Encryption</b> → AES + RSA</li>
+          <li>
+            🧩 Each file is locked with a unique <b>AES-GCM key</b> + initialization
+            vector (IV).
+          </li>
+          <li>📤 AES key is encrypted with <b>RSA Public Key</b> of the recipient.</li>
+          <li>📥 Recipient unlocks it using their <b>RSA Private Key</b>.</li>
+        </ul>
+
+        <h3>🚨 Be Aware of Cyber Attacks</h3>
+        <ul>
+          <li>🎣 <b>Phishing Emails</b> → Fake mails tricking you to share passwords.</li>
+          <li>💻 <b>Malware</b> → Harmful files disguised as normal downloads.</li>
+          <li>👀 <b>Data Breaches</b> → Hackers stealing data from weak apps.</li>
+          <li>💳 <b>Financial Fraud</b> → Hackers may steal money if they get your info.</li>
+        </ul>
+
+        <h3>💡 How to Stay Safe?</h3>
+        <ul>
+          <li>🔒 Always use <b>strong, unique passwords</b>.</li>
+          <li>📱 Enable <b>Two-Factor Authentication (2FA)</b>.</li>
+          <li>🚫 Don’t click unknown links or attachments.</li>
+          <li>🌐 Share files only with people you trust.</li>
+          <li>📶 Avoid logging in from <b>public Wi-Fi</b>.</li>
+        </ul>
+
+        <h3>📂 Example of how this application secure your files</h3>
+        <h4>If a single user is involved</h4>
+        <p>
+          - Alice encrypts her file with AES-GCM 🔒.<br />
+          - AES key itself is locked using Alice RSA Public Key 📡.<br />
+          - Only Alice can unlock using her RSA Private Key 🔑.<br />
+          - ✅ Ensures <b>trust & security</b>.
+        </p>
+        <h4>If multiple users are involved</h4>
+        <p>
+          - Alice encrypts her file with AES-GCM 🔒.<br />
+          - AES key is locked using RSA Public Key of Alice 📡.<br />
+          - If Alice wants to share her file with another user, her AES key is
+          decrypted with her RSA private key and re-encrypted with the receiver's public key 🔑.<br />
+          - ✅ Ensures <b>secure sharing</b>.
+        </p>
+
+        <h3>🎯 Summary</h3>
+        <p>
+          Your files are always encrypted. Sharing = safe. Trust = guaranteed. 🔐✨<br />
+          Stay smart, stay secure, and protect your digital identity 🌍.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

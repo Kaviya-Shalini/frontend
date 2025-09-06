@@ -1,0 +1,103 @@
+  <div class="layout">
+      <!-- Sidebar -->
+      <app-sidebar (sidebarToggle)="isSidebarClosed = $event"></app-sidebar>
+
+      <!-- Main Content -->
+      <div class="content" [class.full]="isSidebarClosed">
+        <h1 class="page-title">Settings</h1>
+        <p class="quote">"Manage your profile, contacts, and account settings."</p>
+
+        <!-- About -->
+        <div class="card">
+          <button class="card-header" (click)="toggleAndFetch('about')">
+            <span>About</span>
+            <span class="chev" [class.open]="open.about">▾</span>
+          </button>
+          <div class="card-body" *ngIf="open.about">
+            <ng-container *ngIf="!loading.user; else userLoading">
+              <div class="row">
+                <span class="lbl">Username</span><span class="val">{{ user?.username }}</span>
+              </div>
+              <div class="row">
+                <span class="lbl">Email</span><span class="val">{{ user?.email }}</span>
+              </div>
+              <!-- 🟢 Public Key -->
+    <h3 class="key-header">🔑 Download Your Public Key</h3>
+    <button class="btn btn-key" (click)="downloadKey('public')">Download Public Key</button>
+
+    <!-- 🟢 Private Key -->
+    <h3 class="key-header">🔒 Download Your Private Key</h3>
+    <button class="btn btn-danger" (click)="downloadKey('private')">Download Private Key</button>
+            </ng-container>
+            <ng-template #userLoading><div class="muted">Loading user…</div></ng-template>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="card">
+          <button class="card-header" (click)="toggleAndFetch('contact')">
+            <span>Contact (Helpline)</span>
+            <span class="chev" [class.open]="open.contact">▾</span>
+          </button>
+          <div class="card-body" *ngIf="open.contact">
+            <ng-container *ngIf="!loading.contact; else contactLoading">
+              <div class="row">
+                <span class="lbl">Helpline</span><span class="val phone">{{ helpline }}</span>
+              </div>
+            </ng-container>
+            <ng-template #contactLoading><div class="muted">Fetching contact…</div></ng-template>
+          </div>
+        </div>
+
+        <!-- Delete Account -->
+        <div class="card danger">
+          <button class="card-header" (click)="toggle('delete')">
+            <span>Delete Account</span>
+            <span class="chev" [class.open]="open.delete">▾</span>
+          </button>
+          <div class="card-body" *ngIf="open.delete">
+            <p class="muted">
+              Deleting your account removes your profile, email, and
+              <b>all files you have uploaded</b>. This cannot be undone.
+            </p>
+            <button class="btn btn-danger" [disabled]="busy.delete" (click)="onDeleteAccount()">
+              {{ busy.delete ? 'Deleting…' : 'Delete My Account' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="card">
+          <button class="card-header" (click)="toggle('logout')">
+            <span>Logout</span>
+            <span class="chev" [class.open]="open.logout">▾</span>
+          </button>
+          <div class="card-body" *ngIf="open.logout">
+            <p class="muted">End your session and return to the login screen.</p>
+            <button class="btn btn-primary" [disabled]="busy.logout" (click)="onLogout()">
+              {{ busy.logout ? 'Logging out…' : 'Logout' }}
+            </button>
+            <div class="ok" *ngIf="logoutOk">✅ Logged out successfully.</div>
+          </div>
+        </div>
+      </div>
+        <!-- 🟢 Help Icon -->
+<div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">
+  ❔
+</div>
+
+<!-- 🟢 Guide Overlay -->
+<div class="guide-overlay" *ngIf="showGuide">
+  <div class="guide-box">
+    <h2>{{ steps[currentStep].title }}</h2>
+    <p>{{ steps[currentStep].text }}</p>
+
+    <div class="guide-buttons">
+      <button (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
+      <button (click)="nextStep()">
+        {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+      </button>
+    </div>
+    <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+  </div>
+    </div>

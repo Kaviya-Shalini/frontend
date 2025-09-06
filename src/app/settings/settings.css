@@ -1,0 +1,342 @@
+  .layout {
+        display: flex;
+        min-height: 100vh;
+        background: #f9fafb;
+         font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+
+      /* Content shifts when sidebar is open/closed */
+      .content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+        transition: margin-left 0.3s ease;
+        margin-left: 250px; /* default when sidebar is visible */
+      }
+
+      .content.full {
+        margin-left: 0; /* take full width when sidebar closed */
+      }
+      /* Common styling for inputs */
+      .id-input,
+      .otp-input {
+        width: 250px;
+        padding: 10px 14px;
+        font-size: 15px;
+        border: 2px solid #1e3a8a; /* Dark blue border */
+        border-radius: 8px;
+        outline: none;
+        background: #f9fafb;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      }
+
+      /* Hover effect */
+      .id-input:hover,
+      .otp-input:hover {
+        border-color: #2563eb; /* lighter blue */
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        transform: scale(1.02);
+      }
+
+      /* Focus effect */
+      .id-input:focus,
+      .otp-input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
+        transform: scale(1.03);
+      }
+
+      /* Label spacing */
+      .id-row label,
+      .otp-section label {
+        font-weight: 500;
+        color: #1f2937;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .page-title {
+        font-size: 32px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .quote {
+        font-size: 14px;
+        color: #6b7280;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      /* Cards */
+      .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        margin: 16px 0;
+        border: 1px solid #eef1f5;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+      }
+      .card.danger {
+        border-color: #ffe0e0;
+      }
+      .card-header {
+        width: 100%;
+        text-align: left;
+        background: #f7f9fc;
+        border: 0;
+        padding: 14px 18px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+      .card-header:hover {
+        background: #f2f6fb;
+      }
+      .chev {
+        transition: transform 0.2s ease;
+      }
+      .chev.open {
+        transform: rotate(180deg);
+      }
+      .card-body {
+        padding: 16px 18px 18px;
+      }
+      .row {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed #e9edf3;
+      }
+      .row:last-child {
+        border-bottom: 0;
+      }
+      .lbl {
+        width: 140px;
+        color: #5a6b87;
+        font-weight: 600;
+      }
+      .val {
+        color: #1f2a44;
+      }
+      .phone {
+        font-family: monospace;
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, background 0.2s ease;
+        margin-top: 8px;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: #2d7bf0;
+        color: #fff;
+        font-size: medium;
+          transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: #206ae0;
+         transform: scale(1.05);
+      }
+      .btn-danger {
+        background: #291969ff;
+        color: #fff;
+        font-size: medium;
+         transition: all 0.3s ease;
+      }
+      .btn-danger:hover {
+        background: #2f2664ff;
+        transform: scale(1.05);
+      }
+     
+
+      .muted {
+        color: #6b7b92;
+      }
+      .ok,
+      .warn {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+      }
+      .ok {
+        background: #eef9f1;
+        color: #196b39;
+        border: 1px solid #c7efd5;
+      }
+      .warn {
+        background: #fff4f4;
+        color: #9c1f1f;
+        border: 1px solid #ffd7d7;
+      }
+
+      /* Responsive */
+      @media (max-width: 1023px) {
+        .content {
+          margin-left: 0 !important;
+          padding: 20px;
+        }
+        .page-title {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .content {
+          padding: 15px;
+        }
+        .page-title {
+          font-size: 20px;
+        }
+        .card-header {
+          font-size: 14px;
+          padding: 10px 14px;
+        }
+        .btn {
+          width: 100%;
+        }
+      }
+         .guide-icon {
+  position: fixed;
+  top: 12px;
+  right: 18px;
+  background: #83229b;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 1500;
+}
+
+.guide-icon:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+}
+
+/* 🟢 Guide Overlay (same as before) */
+.guide-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.guide-box {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 24px;
+  border-radius: 12px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+}
+
+.guide-box h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.guide-box p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.guide-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.guide-buttons button {
+  background: #3b82f6;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.guide-buttons button:hover {
+  background: #2563eb;
+}
+
+.guide-buttons button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.skip-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.skip-btn:hover {
+  color: #ef4444;
+}
+.key-header {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.btn-key {
+  background: #059669; /* teal green */
+  color: white;
+  padding: 10px 16px;
+  font-size: medium;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-key:hover {
+  background: #047857;
+  transform: scale(1.05);
+}

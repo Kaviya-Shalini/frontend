@@ -1,0 +1,60 @@
+ <section class="card">
+      <div class="header">
+        <h1>Create account</h1>
+        <p>Join our securevault in seconds</p>
+      </div>
+
+      <!-- Step 1: Email Input -->
+      <div *ngIf="!otpVerified">
+        <input
+          class="input"
+          name="email"
+          [(ngModel)]="email"
+          type="email"
+          placeholder="Enter your Email"
+          required
+        />
+
+        <!-- OTP Section (only visible after email is entered) -->
+        <div *ngIf="email">
+          <input
+            class="input"
+            name="otp"
+            [(ngModel)]="otp"
+            type="text"
+            placeholder="Enter OTP"
+            *ngIf="otpRequested"
+          />
+
+          <div style="display:flex; gap:10px; margin-bottom:16px">
+            <button class="btn" (click)="generateOtp()" [disabled]="loading">Generate OTP</button>
+            <button class="btn secondary" (click)="verifyOtp()" [disabled]="!otp">
+              Verify OTP
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: After OTP Verified -->
+      <form *ngIf="otpVerified" (ngSubmit)="createAccount()" #f="ngForm">
+        <div style="display:grid; gap:10px">
+          <input class="input" name="name" [(ngModel)]="name" placeholder="Username" required />
+          <input
+            class="input"
+            name="password"
+            [(ngModel)]="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <div class="helper">
+            Password must be 8+ chars with upper, lower, digit & special character.
+          </div>
+          <button class="btn" type="submit" [disabled]="loading">Create Account</button>
+        </div>
+      </form>
+
+      <!-- Error / Success messages -->
+      <div *ngIf="message" class="info" style="margin-top:8px">{{ message }}</div>
+      <div *ngIf="error" class="error" style="margin-top:8px">{{ error }}</div>
+    </section>

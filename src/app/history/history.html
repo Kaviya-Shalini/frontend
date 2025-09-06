@@ -1,0 +1,72 @@
+<div class="layout" [class.sidebar-closed]="isSidebarClosed">
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="header-bar">
+      <h1 class="page-title">Activity History</h1>
+      <button class="clear-btn" (click)="clearAllLogs()">Clear All</button>
+    </div>
+    <p class="quote">Track all your recent actions and activities</p>
+
+    <div class="card">
+      <!-- Loading State -->
+      <p *ngIf="loading" class="loading">Loading activities...</p>
+
+      <!-- Error State -->
+      <p *ngIf="error" class="error">{{ error }}</p>
+
+      <!-- Only show content when not loading -->
+      <div *ngIf="!loading">
+        <!-- Activities List -->
+        <div *ngIf="activities.length > 0; else emptyState">
+          <h2 class="section-title">Recent Activities</h2>
+          <ul class="activity-list">
+            <li *ngFor="let activity of activities" class="activity-item">
+              <div class="activity-left">
+                <div class="activity-user">{{ activity.username }}</div>
+                <div class="activity-action">
+                  {{ activity.action }}
+                  <span *ngIf="activity.filename">: {{ activity.filename }}</span>
+                </div>
+              </div>
+              <div class="activity-time">{{ activity.timestamp | date : 'medium' }}</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Empty State -->
+        <ng-template #emptyState>
+          <p class="empty">No activities found</p>
+        </ng-template>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button (click)="prevPage()" [disabled]="pageNumber === 0">Prev</button>
+          <span>Page {{ pageNumber + 1 }} of {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="lastPage">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🟢 Help Icon -->
+  <div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">❔</div>
+
+  <!-- 🟢 Guide Overlay -->
+  <div class="guide-overlay" *ngIf="showGuide">
+    <div class="guide-box">
+      <h2>{{ steps[currentStep].title }}</h2>
+      <p>{{ steps[currentStep].text }}</p>
+
+      <div class="guide-buttons">
+        <button (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
+        <button (click)="nextStep()">
+          {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
+        </button>
+      </div>
+      <button class="skip-btn" (click)="skipGuide()">Skip Guide ✖</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,349 @@
+
+ .layout {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background: #ffffff;
+        font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      .layout.sidebar-closed app-sidebar {
+        display: none;
+      }
+
+      app-sidebar {
+        width: 260px;
+        flex-shrink: 0;
+      }
+
+      .wallet-container {
+        flex: 1;
+        padding: 40px;
+        color: #000;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      /* Hamburger */
+      .hamburger {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 28px;
+        height: 22px;
+        border: none;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        z-index: 1100;
+      }
+      .hamburger span {
+        display: block;
+        width: 100%;
+        height: 4px;
+        background: #000;
+        border-radius: 2px;
+      }
+
+      .wallet-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .wallet-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #293061ff;
+      }
+      .wallet-subtitle {
+        font-size: 1rem;
+        color: #444;
+        margin: 5px 0 20px;
+      }
+      .wallet-search {
+        width: 60%;
+        max-width: 720px;
+        padding: 12px 15px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+      .wallet-search:focus {
+        border-color: #234087ff;
+        box-shadow: 0 0 8px rgba(51, 43, 140, 0.66);
+      }
+
+      /* Grid */
+      .wallet-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        align-items: stretch;
+      }
+
+      /* Card */
+      .wallet-card {
+        background: linear-gradient(145deg, #1e293b, #0f172a);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.5), -10px -10px 25px rgba(255, 255, 255, 0.05);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .wallet-card:hover {
+        transform: scale(1.05);
+        box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.6), -15px -15px 30px rgba(255, 255, 255, 0.05);
+      }
+      .wallet-card.active {
+        outline: 2px solid #5c99a7ff;
+        transform: scale(1.03);
+      }
+
+      .card-content p {
+        margin: 8px 0;
+        font-size: 0.95rem;
+      }
+      .card-content strong {
+        color: #5c99a7ff;
+      }
+
+      .card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.download-options {
+  display: flex;
+  justify-content: center;
+  gap: 12px;       /* 🟢 adds spacing between Encrypted & Decrypted */
+  margin-top: 2px;
+  flex-wrap: wrap; /* keeps them from overflowing on small screens */
+}
+
+
+
+
+/* Show when active */
+.sub-actions.active {
+  display: flex;
+}
+
+  .btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1f2937; /* dark slate */
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  }
+  .btn:hover {
+  background-color: #374151; /* lighter dark */
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+     /* Specific colors for main row */
+.btn-download {
+  background-color: #1d4ed8;
+}
+.btn-download:hover {
+  background-color: #2563eb;
+}
+.btn-share {
+  background-color: #16a34a;
+}
+.btn-share:hover {
+  background-color: #22c55e;
+}
+.btn-delete {
+  background-color: #dc2626;
+}
+.btn-delete:hover {
+  background-color: #ef4444;
+}
+
+/* Sub-action colors */
+.btn-encrypted {
+  background-color: #0f766e;
+}
+.btn-encrypted:hover {
+  background-color: #14b8a6;
+}
+.btn-decrypted {
+  background-color: #7c3aed;
+}
+.btn-decrypted:hover {
+  background-color: #8b5cf6;
+}
+
+      /* Pagination */
+      .pagination {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .pagination button {
+        width: 35px;
+        height: 35px;
+        border: none;
+        border-radius: 6px;
+        background: #e5e7eb;
+        color: #111827;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 600;
+      }
+      .pagination button:hover:not(:disabled) {
+        background: #2563eb;
+        color: white;
+      }
+      .pagination button:disabled {
+        background: #d1d5db;
+        color: #9ca3af;
+        cursor: not-allowed;
+      }
+      .pagination button.active {
+        background: #111f3eff;
+        color: white;
+        font-weight: bold;
+      }
+      .pagination .dots {
+        padding: 8px 10px;
+        color: #6b7280;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .wallet-container {
+          padding: 20px;
+        }
+        .wallet-title {
+          font-size: 2rem;
+        }
+        .wallet-search {
+          width: 100%;
+        }
+      }
+      .guide-icon {
+  position: fixed;
+  top: 12px;
+  right: 18px;
+  background: #83229b;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 1500;
+}
+
+.guide-icon:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+}
+
+/* 🟢 Guide Overlay (same as before) */
+.guide-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.guide-box {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 24px;
+  border-radius: 12px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+}
+
+.guide-box h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.guide-box p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.guide-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.guide-buttons button {
+  background: #3b82f6;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.guide-buttons button:hover {
+  background: #2563eb;
+}
+
+.guide-buttons button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.skip-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.skip-btn:hover {
+  color: #ef4444;
+}

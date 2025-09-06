@@ -1,0 +1,28 @@
+
+ <div class="layout">
+      <nav class="sidebar" [class.closed]="isClosed">
+        <h2 class="logo">
+          SecureVault
+          <span class="close-btn" (click)="toggleSidebar()">❮</span>
+        </h2>
+        <ul>
+          <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+          <li><a routerLink="/upload" routerLinkActive="active">Upload</a></li>
+          <li><a routerLink="/mywallet" routerLinkActive="active">My Wallet</a></li>
+          <!-- <li><a routerLink="/sensitivity" routerLinkActive="active">Share</a></li> -->
+          <li><a routerLink="/receivedfiles" routerLinkActive="active">Received Files</a></li>
+          <li><a routerLink="/sharedfiles" routerLinkActive="active">Shared Files</a></li>
+
+         
+          <li><a routerLink="/history" routerLinkActive="active">History</a></li>
+          <li><a routerLink="/settings" routerLinkActive="active">Settings</a></li>
+        </ul>
+
+        <!-- <button class="logout-btn" (click)="logout()">Logout</button> -->
+      </nav>
+
+      <button class="hamburger" *ngIf="isClosed" (click)="toggleSidebar()">
+  <span>☰</span>
+</button>
+
+    </div>
