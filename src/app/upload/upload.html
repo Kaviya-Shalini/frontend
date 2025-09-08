@@ -111,7 +111,10 @@
             [disabled]="!selectedFiles.length || !selectedCategory"
             (click)="onUpload()"
           >
-            🚀 Upload File(s)
+           <ng-container *ngIf="!submitted">🚀 Upload File(s)</ng-container> 
+            <ng-container *ngIf="submitted">
+                <span class="spinner"></span> Uploading...
+              </ng-container>
           </button>
 
           <!-- Upload Messages -->

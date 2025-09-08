@@ -85,7 +85,7 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
     this.errorMsg = '';
     this.http
       .get<PagedUsernamesResponse>(
-        `http://localhost:8080/api/auth/files/shared-recipients/${this.fileId}?pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+        `http://localhost:8080/api/auth/shared-files/fetch-shared/${this.fileId}?pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
         { withCredentials: true }
       )
       .subscribe({
@@ -130,6 +130,7 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
   }
 
   // ✅ Delete for Everyone
+  // ✅ Delete for Everyone
   deleteForEveryone(): void {
     this.http
       .delete(`http://localhost:8080/api/auth/files/delete/${this.fileId}`, {
@@ -141,10 +142,17 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
           this.showToast('File deletion completed successfully ✅', 'success');
           setTimeout(() => this.router.navigate(['/mywallet']), 1500);
         },
+        error: (err) => {
+          const backendMsg = err.error?.error || err.message;
 
-        error: (err) =>
-          (this.errorMessage =
-            'Error deleting file for everyone ❌ ' + (err.error?.error || err.message)),
+          if (backendMsg.includes("Deletion type must be 'me'")) {
+            // special case: file is shared copy
+            this.showToast("❌ This is a shared file. You can only use 'Delete for Me'.", 'error');
+          } else {
+            // generic fallback
+            this.errorMessage = 'Error deleting file for everyone ❌ ' + backendMsg;
+          }
+        },
       });
   }
 

@@ -46,13 +46,14 @@ app-sidebar {
 }
 .btn.back {
   margin-top: 14px;
-  background: #e2e8f0;
-  color: #1e293b;
+  background: #08254a;
+  color: #ffffff;
   transition: all 0.3s ease;
+ 
 }
 .btn.back:hover {
-  background: #cbd5e1;
-  transform: translateY(-2px);
+  background: #163e6f;
+  transform: translateY(-3px) scale(1.02);
 }
 
 /* Actions */
@@ -74,15 +75,15 @@ app-sidebar {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .btn.danger {
-  background: linear-gradient(135deg, #a62c2c, #ef4444);
+  background: rgb(109, 10, 10);
   color: white;
 }
 .btn.warn {
-  background: linear-gradient(135deg, #6c1d67, #610b55);
+  background:purple;
   color: white;
 }
 .btn.primary {
-  background: linear-gradient(135deg, #26426e, #0c1e51);
+  background:darkblue;
   color: white;
 }
 .btn:hover {

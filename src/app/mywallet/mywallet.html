@@ -28,6 +28,7 @@
         class="wallet-card"
         *ngFor="let file of files"
         #cardEl
+         [id]="'file-' + file.id"
         [class.active]="selectedCard?.id === file.id"
         (click)="selectCard(file)"
       >

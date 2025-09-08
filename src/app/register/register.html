@@ -27,7 +27,13 @@
           />
 
           <div style="display:flex; gap:10px; margin-bottom:16px">
-            <button class="btn" (click)="generateOtp()" [disabled]="loading">Generate OTP</button>
+           <button class="btn" (click)="generateOtp()" [disabled]="loading">
+  <ng-container *ngIf="!loading">Generate OTP</ng-container>
+  <ng-container *ngIf="loading">
+    <span class="spinner"></span> Generating...
+  </ng-container>
+</button>
+
             <button class="btn secondary" (click)="verifyOtp()" [disabled]="!otp">
               Verify OTP
             </button>
@@ -47,8 +53,9 @@
             placeholder="Password"
             required
           />
+          <div *ngIf="passwordError" class="error">{{ passwordError }}</div>
           <div class="helper">
-            Password must be 8+ chars with upper, lower, digit & special character.
+           <h4>Username should contain atleast 5 characters</h4> Password must be 8+ chars with upper, lower, digit & special character.
           </div>
           <button class="btn" type="submit" [disabled]="loading">Create Account</button>
         </div>

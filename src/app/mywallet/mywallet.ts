@@ -13,7 +13,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar';
 import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface FileData {
   id: number;
@@ -45,7 +45,7 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
   selectedCard: FileData | null = null;
   isSidebarClosed = false;
   searchQuery: string = '';
-
+  highlightFileName: string | null = null;
   @ViewChild(SidebarComponent) sidebar!: SidebarComponent;
   @ViewChildren('cardEl') cardElements!: QueryList<ElementRef>;
 
@@ -59,6 +59,7 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private cookieService: CookieService
   ) {}
   // 🟢 Guide State for MyWallet Page
@@ -112,6 +113,13 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.checkScreenSize();
+    // Read query param
+    this.route.queryParams.subscribe((params) => {
+      if (params['fileName']) {
+        this.highlightFileName = params['fileName'];
+      }
+    });
+
     this.loadPage();
   }
 
@@ -151,10 +159,73 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
           this.files = res.fetchFiles;
           this.totalPages = res.totalPages;
           this.totalElements = res.totalElements;
-          setTimeout(() => this.adjustCardHeights(), 0);
+
+          setTimeout(() => {
+            this.adjustCardHeights();
+
+            // ✅ Run highlight only if it's the first time
+            if (this.highlightFileName !== null) {
+              this.checkAndHighlightFile();
+            }
+          }, 0);
         },
         error: (err) => console.error('Failed to load files', err),
       });
+  }
+
+  checkAndHighlightFile() {
+    const file = this.files.find((f) => f.filename === this.highlightFileName);
+    if (file) {
+      const fileId = file.id;
+      this.highlightFileName = null; // ✅ Reset immediately after finding it
+      this.scrollToFile(fileId);
+    } else if (this.currentPage + 1 < this.totalPages) {
+      this.currentPage++;
+      this.loadPage();
+    } else {
+      this.searchQuery = this.highlightFileName!;
+      this.highlightFileName = null; // ✅ Reset here too
+      this.searchAndHighlight();
+    }
+  }
+
+  searchAndHighlight() {
+    this.http
+      .get<FilesResponse>(
+        `http://localhost:8080/api/auth/files/fetch-all?keyword=${encodeURIComponent(
+          this.highlightFileName!
+        )}&pageNumber=1&pageSize=${this.pageSize}`,
+        { withCredentials: true }
+      )
+      .subscribe({
+        next: (res) => {
+          this.files = res.fetchFiles;
+          this.totalPages = res.totalPages;
+          this.totalElements = res.totalElements;
+
+          setTimeout(() => {
+            const file = this.files.find((f) => f.filename === this.highlightFileName);
+            if (file) this.scrollToFile(file.id);
+          }, 0);
+        },
+        error: (err) => console.error('Search failed', err),
+      });
+  }
+  scrollToFile(fileId: number) {
+    const attemptScroll = () => {
+      const element = document.getElementById('file-' + fileId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.classList.add('highlight');
+
+        setTimeout(() => {
+          element.classList.remove('highlight');
+        }, 5000);
+      } else {
+        setTimeout(attemptScroll, 200);
+      }
+    };
+    attemptScroll();
   }
 
   /** Search with pagination */

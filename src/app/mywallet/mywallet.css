@@ -95,6 +95,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+       
       }
       .wallet-card:hover {
         transform: scale(1.05);
@@ -346,4 +347,28 @@
 
 .skip-btn:hover {
   color: #ef4444;
+}
+.highlight {
+  background-color: #563dae !important; /* bright yellow */
+  color: #ffffff !important;
+  box-shadow: 0 0 25px  #563dae, 0 0 40px  #563dae; /* glowing effect */
+  transform: scale(1.1); /* make it slightly bigger */
+  transition: transform 0.3s ease-in-out, background-color 0.5s ease, box-shadow 0.5s ease;
+  animation: pulseHighlight 1s ease-in-out infinite;
+}
+
+/* Add pulsing effect */
+@keyframes pulseHighlight {
+  0% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px  #563dae, 0 0 40px  #563dae;
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 35px  #563dae, 0 0 60px  #563dae;
+  }
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px  #563dae, 0 0 40px  #563dae;
+  }
 }

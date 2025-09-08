@@ -37,7 +37,7 @@
 
         <!-- Card Grid -->
         <div class="card-grid">
-          <div class="file-card" *ngFor="let file of filteredFiles" #cardEl>
+          <div class="file-card" *ngFor="let file of filteredFiles" #cardEl (click)="openInWallet(file)">
             <h3>{{ file.filename }}</h3>
             <p><strong>Sender:</strong> {{ file.senderName }}</p>
             <p><strong>Receiver:</strong> {{ file.recipientName }}</p>

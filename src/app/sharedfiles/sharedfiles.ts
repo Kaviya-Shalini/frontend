@@ -243,7 +243,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     this.http
       .get<PaginatedResponse<SharedFile>>('http://localhost:8080/api/auth/shared-files/by-me', {
         params: {
-          pageNumber: this.currentPage.toString(),
+          pageNumber: (this.currentPage + 1).toString(),
           pageSize: this.pageSize.toString(),
         },
       })
@@ -291,7 +291,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
       .get<PaginatedResponse<SharedFile>>(`http://localhost:8080/api/auth/shared-files/by-me`, {
         params: {
           keyword: this.searchQuery,
-          pageNumber: this.currentPage.toString(),
+          pageNumber: (this.currentPage + 1).toString(),
           pageSize: this.pageSize.toString(),
         },
       })
@@ -321,5 +321,10 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     if (page) this.currentPage = +page;
     if (filter) this.filterType = filter as any;
     if (query) this.searchQuery = query;
+  }
+  openInWallet(file: SharedFile) {
+    this.router.navigate(['/mywallet'], {
+      queryParams: { fileName: file.filename }, // Pass filename
+    });
   }
 }

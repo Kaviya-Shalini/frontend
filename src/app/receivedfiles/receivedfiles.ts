@@ -122,7 +122,7 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
     this.http
       .get<PaginatedResponse<ReceivedFile>>('http://localhost:8080/api/auth/shared-files/to-me', {
         params: {
-          pageNumber: (this.currentPage + 1).toString(),
+          pageNumber: this.currentPage.toString(),
           pageSize: this.pageSize.toString(),
         },
       })
@@ -186,7 +186,7 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
       .get<PaginatedResponse<ReceivedFile>>('http://localhost:8080/api/auth/shared-files/to-me', {
         params: {
           keyword: this.searchQuery,
-          pageNumber: this.currentPage.toString(),
+          pageNumber: (this.currentPage + 1).toString(),
           pageSize: this.pageSize.toString(),
         },
       })
@@ -238,7 +238,10 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
   loadPage() {
     this.http
       .get<PaginatedResponse<ReceivedFile>>('http://localhost:8080/api/auth/shared-files/to-me', {
-        params: { pageNumber: this.currentPage.toString(), pageSize: this.pageSize.toString() },
+        params: {
+          pageNumber: (this.currentPage + 1).toString(),
+          pageSize: this.pageSize.toString(),
+        },
       })
       .subscribe((res: PaginatedResponse<ReceivedFile>) => {
         this.allFiles = res.fetchFiles;
@@ -268,5 +271,10 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
       this.currentPage = page;
       this.searchQuery.trim() ? this.searchFilesWithPagination() : this.loadPage();
     }
+  }
+  openInWallet(file: ReceivedFile) {
+    this.router.navigate(['/mywallet'], {
+      queryParams: { fileName: file.filename }, // Pass filename
+    });
   }
 }

@@ -22,8 +22,21 @@ export class RegisterComponent {
 
   error = '';
   message = '';
-
+  passwordError: string | null = null;
   constructor(private http: HttpClient, private router: Router) {}
+
+  checkPassword(password: string): boolean {
+    // Regex to check all conditions
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!regex.test(password)) {
+      this.passwordError = 'Your Password is not meeting password standards.';
+      return false;
+    }
+
+    this.passwordError = null; // valid
+    return true;
+  }
 
   generateOtp() {
     this.error = '';
@@ -71,6 +84,9 @@ export class RegisterComponent {
   }
 
   createAccount() {
+    if (!this.checkPassword(this.password)) {
+      return; // stop account creation
+    }
     this.error = '';
     this.message = '';
     if (!this.name || !this.password) {

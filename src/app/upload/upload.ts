@@ -190,10 +190,9 @@ export class UploadComponent implements OnInit {
     const categoryToSend =
       this.selectedCategory === 'other' ? this.customCategory.trim() : this.selectedCategory;
 
-    // Post all files together (backend expects MultipartFile[] "files")
     const fd = new FormData();
     this.selectedFiles.forEach((file) => {
-      fd.append('files', file); // ✅ corrected field name
+      fd.append('files', file);
     });
 
     const params = new URLSearchParams({
@@ -202,17 +201,17 @@ export class UploadComponent implements OnInit {
       category: categoryToSend,
     }).toString();
 
-    this.http
-      .post(`http://localhost:8080/api/auth/files/upload?${params}`, fd) // ✅ corrected endpoint
-      .subscribe({
-        next: () => {
-          this.uploadSuccess = true;
-          this.uploadMessage = '✅ File(s) uploaded successfully!';
-        },
-        error: () => {
-          this.uploadSuccess = false;
-          this.uploadMessage = '❌ Failed to upload file(s). Please try again.';
-        },
-      });
+    this.http.post(`http://localhost:8080/api/auth/files/upload?${params}`, fd).subscribe({
+      next: () => {
+        this.uploadSuccess = true;
+        this.uploadMessage = '✅ File(s) uploaded successfully!';
+        this.submitted = false; // 🔥 stop spinner
+      },
+      error: () => {
+        this.uploadSuccess = false;
+        this.uploadMessage = '❌ Failed to upload file(s). Please try again.';
+        this.submitted = false; // 🔥 stop spinner
+      },
+    });
   }
 }
