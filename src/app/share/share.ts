@@ -63,41 +63,40 @@ export class ShareComponent implements OnInit {
     return this.fileId && this.recipientUsername.trim() && this.isSensitive !== null;
   }
 
-  onShare(form: NgForm) {
-    this.successMessage = '';
-    this.errorMessage = '';
-
-    if (!this.canSubmit()) {
-      form.control.markAllAsTouched();
+  onShareFile() {
+    if (!this.fileId || !this.recipientUsername) {
+      this.errorMessage = 'Please provide recipient username.';
       return;
     }
 
+    this.successMessage = '';
+    this.errorMessage = '';
     this.loading = true;
 
-    const body = {
-      recipientUsername: this.recipientUsername.trim(),
+    const payload = {
       fileId: this.fileId,
-      isSensitive: this.isSensitive,
+      recipientUsername: this.recipientUsername,
     };
 
-    this.http.post<{ message?: string }>(this.apiUrl, body, { withCredentials: true }).subscribe({
-      next: (res) => {
-        this.successMessage = res?.message || 'File shared successfully ✅';
-        this.errorMessage = '';
-        // ✅ reset properly
-        form.resetForm({
-          recipientUsername: '',
-          isSensitive: null,
-        });
+    this.http.post(this.apiUrl, payload, { responseType: 'text' }).subscribe({
+      next: (response) => {
+        this.successMessage = 'File shared successfully!';
+        this.loading = false;
       },
       error: (err) => {
-        this.errorMessage =
-          err?.error?.message ||
-          'Failed to share file ❌ because you are trying to share your received file only the owner of the file is allowed to share to multiple users';
-        console.error('Share error:', err);
-      },
-      complete: () => {
         this.loading = false;
+        if (err.error && typeof err.error === 'string') {
+          // backend sends exception messages as response body
+          if (err.error.includes('Recipient already has access')) {
+            this.errorMessage = 'This user already has access to the file.';
+          } else if (err.error.includes('User is not authorized to share')) {
+            this.errorMessage = 'You are not allowed to share a received file.';
+          } else {
+            this.errorMessage = err.error;
+          }
+        } else {
+          this.errorMessage = 'Something went wrong while sharing file.';
+        }
       },
     });
   }

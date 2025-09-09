@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
 import { SidebarComponent } from '../sidebar/sidebar';
 
 @Component({
@@ -205,12 +204,12 @@ export class UploadComponent implements OnInit {
       next: () => {
         this.uploadSuccess = true;
         this.uploadMessage = '✅ File(s) uploaded successfully!';
-        this.submitted = false; // 🔥 stop spinner
+        this.submitted = false; //  stop spinner
       },
       error: () => {
         this.uploadSuccess = false;
         this.uploadMessage = '❌ Failed to upload file(s). Please try again.';
-        this.submitted = false; // 🔥 stop spinner
+        this.submitted = false; //  stop spinner
       },
     });
   }

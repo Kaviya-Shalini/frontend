@@ -113,3 +113,62 @@
           font-size: 24px;
         }
       }
+      /* Base button */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* space between icon and text */
+  transition: 0.2s;
+}
+
+/* Primary Sign In button */
+.primary-btn {
+  background: darkblue;
+  color: #fff;
+}
+.primary-btn:hover:not([disabled]) {
+  background: linear-gradient(90deg, #4f46e5, #3730a3);
+}
+
+/* Google button */
+.google-btn {
+  background: #fff;
+  border: 1px solid #dadce0;
+  color: #3c4043;
+}
+.google-btn:hover {
+  background: #f1f3f4;
+}
+
+/* GitHub button */
+.github-btn {
+  background: #ffffff;
+  color: #000000;
+    border: 1px solid #dadce0;
+}
+.github-btn:hover {
+  background: #333840;
+}
+
+/* Icon inside buttons */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Grouping social buttons */
+.social-buttons {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

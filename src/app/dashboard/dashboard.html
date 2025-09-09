@@ -130,15 +130,25 @@
   </div>
 
   <!-- 🟢 Guide Overlay -->
+   <!-- 🟢 Help Icon -->
+  <div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">❔</div>
+
+  <!-- 🟢 Education Icon with Suggestion -->
+  <div class="education-wrapper">
+    <div class="education-icon" title="Click here to learn about cybersecurity & app security" (click)="openEducation()">📘</div>
+    <div class="edu-suggestion" *ngIf="showEduSuggestion">
+      📘 You are advised to read this User Education
+      <span class="arrow"></span>
+    </div>
+  </div>
+
+  <!-- 🟢 Guide Overlay -->
   <div class="guide-overlay" *ngIf="showGuide">
     <div class="guide-box">
       <h2>{{ steps[currentStep].title }}</h2>
       <p>{{ steps[currentStep].text }}</p>
-
       <div class="guide-buttons">
-        <button (click)="prevStep()" [disabled]="currentStep === 0">
-           Back
-        </button>
+        <button (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
         <button (click)="nextStep()">
           {{ currentStep === steps.length - 1 ? 'Finish' : 'Next ' }}
         </button>
@@ -150,80 +160,98 @@
   <!-- 🔵 User Education Overlay -->
   <div class="education-overlay" *ngIf="showEducation">
     <div class="education-box">
-      <!-- Close button (fixed so always visible) -->
       <button class="close-edu" (click)="closeEducation()">✖</button>
       <h2>📘 User Education</h2>
 
-      <div class="edu-content">
-        <h3>🌍 Why we created this app?</h3>
-        <p>
-          We live in a digital world where your <b>data</b> is your identity.
-          Keeping it safe is critical.
-        </p>
+     <div class="edu-content">
+  <h3>🌍 Why we created this app?</h3>
+  <p>
+    We live in a digital world where your <b>data</b> is your identity.
+    Keeping it safe is critical.
+  </p>
 
-        <h3>🔐 What is Cybersecurity?</h3>
-        <p>
-          Cybersecurity means protecting your files, privacy, and identity from
-          unauthorized access 👨‍💻.
-        </p>
+  <h3>🔐 How are your files protected?</h3>
+  <p>
+    All your uploaded files are <b>securely encrypted</b> before storage.
+    This means nobody (not even us) can view your files unless you
+    explicitly share them.
+  </p>
 
-        <h3>🛡 Why is it important?</h3>
-        <p>
-          Hackers 🕵️ can misuse your files. This app ensures <b>only you</b> and
-          those you trust can view your files.
-        </p>
+  <h3>🚨 Be Aware of Cyber Attacks</h3>
+  <ul>
+    <li>🎣 <b>Phishing Emails</b> → Fake mails tricking you to share passwords.</li>
+    <li>💻 <b>Malware</b> → Harmful files disguised as normal downloads.</li>
+    <li>👀 <b>Data Breaches</b> → Hackers stealing data from weak apps.</li>
+    <li>💳 <b>Financial Fraud</b> → Hackers may steal money if they get your info.</li>
+    <li>📞 <b>Phone Scams</b> → Fraudsters posing as bank/tech support.</li>
+    <li>🎭 <b>Impersonation Attacks</b> → Hackers pretending to be friends or colleagues.</li>
+  </ul>
 
-        <h3>⚡ How this app safeguards you?</h3>
-        <ul>
-          <li>🔑 <b>Hybrid Encryption</b> → AES + RSA</li>
-          <li>
-            🧩 Each file is locked with a unique <b>AES-GCM key</b> + initialization
-            vector (IV).
-          </li>
-          <li>📤 AES key is encrypted with <b>RSA Public Key</b> of the recipient.</li>
-          <li>📥 Recipient unlocks it using their <b>RSA Private Key</b>.</li>
-        </ul>
+  <h3>📂 Safe File Sharing</h3>
+  <ul>
+    <li>✔ Always verify the recipient’s identity before sharing files.</li>
+    <li>✔ Avoid sharing sensitive files.</li>
+  </ul>
 
-        <h3>🚨 Be Aware of Cyber Attacks</h3>
-        <ul>
-          <li>🎣 <b>Phishing Emails</b> → Fake mails tricking you to share passwords.</li>
-          <li>💻 <b>Malware</b> → Harmful files disguised as normal downloads.</li>
-          <li>👀 <b>Data Breaches</b> → Hackers stealing data from weak apps.</li>
-          <li>💳 <b>Financial Fraud</b> → Hackers may steal money if they get your info.</li>
-        </ul>
+  <h3>🛡 Device & Network Safety</h3>
+  <ul>
+    <li>📱 Keep your phone and computer updated with the latest patches.</li>
+    <li>🦠 Install trusted antivirus & enable firewalls.</li>
+    <li>🌐 Use a <b>VPN</b> when on public Wi-Fi.</li>
+    <li>📶 Change your Wi-Fi password regularly.</li>
+    <li>🔌 Turn off Bluetooth & Wi-Fi when not in use.</li>
+  </ul>
 
-        <h3>💡 How to Stay Safe?</h3>
-        <ul>
-          <li>🔒 Always use <b>strong, unique passwords</b>.</li>
-          <li>📱 Enable <b>Two-Factor Authentication (2FA)</b>.</li>
-          <li>🚫 Don’t click unknown links or attachments.</li>
-          <li>🌐 Share files only with people you trust.</li>
-          <li>📶 Avoid logging in from <b>public Wi-Fi</b>.</li>
-        </ul>
+  <h3>🔏 Data Privacy Practices</h3>
+  <ul>
+    <li>⚙ Review app permissions regularly (camera, mic, contacts).</li>
+    <li>☁ Store data only on secure, encrypted cloud services.</li>
+    <li>📸 Don’t overshare personal info on social media.</li>
+    <li>🕵️ Be cautious when granting “Always Allow” access.</li>
+  </ul>
 
-        <h3>📂 Example of how this application secure your files</h3>
-        <h4>If a single user is involved</h4>
-        <p>
-          - Alice encrypts her file with AES-GCM 🔒.<br />
-          - AES key itself is locked using Alice RSA Public Key 📡.<br />
-          - Only Alice can unlock using her RSA Private Key 🔑.<br />
-          - ✅ Ensures <b>trust & security</b>.
-        </p>
-        <h4>If multiple users are involved</h4>
-        <p>
-          - Alice encrypts her file with AES-GCM 🔒.<br />
-          - AES key is locked using RSA Public Key of Alice 📡.<br />
-          - If Alice wants to share her file with another user, her AES key is
-          decrypted with her RSA private key and re-encrypted with the receiver's public key 🔑.<br />
-          - ✅ Ensures <b>secure sharing</b>.
-        </p>
+  <h3>💾 Backup & Recovery</h3>
+  <ul>
+    <li>💿 Follow the <b>3-2-1 rule</b>: 3 copies, 2 mediums, 1 offsite.</li>
+    <li>🔑 Always encrypt backups before storage.</li>
+    <li>🛡 Keep offline backups safe from ransomware attacks.</li>
+    <li>⏱ Test recovery regularly to ensure files can be restored.</li>
+  </ul>
 
-        <h3>🎯 Summary</h3>
-        <p>
-          Your files are always encrypted. Sharing = safe. Trust = guaranteed. 🔐✨<br />
-          Stay smart, stay secure, and protect your digital identity 🌍.
-        </p>
-      </div>
-    </div>
+  <h3>📱 Safe Mobile Usage</h3>
+  <ul>
+    <li>📥 Download apps only from official stores (Play Store, App Store).</li>
+    <li>🔍 Review app permissions before installing.</li>
+    <li>💳 Be careful when using mobile banking on public Wi-Fi.</li>
+    <li>📲 Ignore suspicious SMS links or OTP requests.</li>
+  </ul>
+
+  <h3>💼 Work & Remote Security</h3>
+  <ul>
+    <li>🖥 Always use company VPN for remote work.</li>
+    <li>📂 Don’t save company files on personal devices.</li>
+    <li>📧 Watch out for fake “work-related” phishing emails.</li>
+    <li>🔒 Lock your device when leaving it unattended.</li>
+  </ul>
+
+  <h3>✅ Quick Checklist</h3>
+  <p>Follow this daily checklist to stay secure:</p>
+  <ul>
+    <li>🔒 Strong password + 2FA enabled</li>
+    <li>🛠 Devices & apps updated</li>
+    <li>📂 Sensitive files encrypted & backed up</li>
+    <li>🚫 Avoid suspicious links/emails</li>
+    <li>🌐 Use VPN on public Wi-Fi</li>
+  </ul>
+
+  <h3>🎯 Summary</h3>
+  <p>
+    Your files are always encrypted 🔐.<br />
+    Sharing = safe, when you trust the recipient.<br />
+    Security = daily habit, not one-time setup.<br />
+    Stay smart, stay secure, and safeguard your digital identity 🌍✨.
+  </p>
+</div>
+
   </div>
 </div>

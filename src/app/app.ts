@@ -21,21 +21,4 @@ export class App {
   protected readonly title = signal('frontend');
 
   constructor(private cookieService: CookieService) {}
-
-  setJwtToken(token: string): void {
-    this.cookieService.set('jwt_token', token, {
-      expires: 1,
-      path: '/',
-      sameSite: 'Lax',
-      secure: true,
-    });
-  }
-
-  getJwtToken(): string | null {
-    return this.cookieService.get('jwt_token') || null;
-  }
-
-  removeJwtToken(): void {
-    this.cookieService.delete('jwt_token', '/');
-  }
 }

@@ -18,6 +18,7 @@ import { SharedFilesComponent } from './sharedfiles/sharedfiles';
 import { RegisterComponent } from './register/register';
 import { AuthGuard } from './services/auth.guard';
 import { DeleteFileComponent } from './delete/delete';
+
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'oauth2/callback', component: OAuthCallbackComponent },
