@@ -1,4 +1,4 @@
-/* Layout */
+
 .layout {
   display: flex;
   min-height: 100vh;
@@ -7,7 +7,6 @@
   background: white;
 }
 
-/* Sidebar */
 app-sidebar {
   width: 240px;
   flex-shrink: 0;
@@ -19,7 +18,6 @@ app-sidebar {
   overflow: hidden;
 }
 
-/* Delete Container */
 .delete-container {
   flex: 1;
   padding: 40px 20px;
@@ -28,7 +26,7 @@ app-sidebar {
   align-items: center;
 }
 
-/* Header */
+
 .delete-header {
   text-align: center;
   margin-bottom: 25px;
@@ -56,7 +54,6 @@ app-sidebar {
   transform: translateY(-3px) scale(1.02);
 }
 
-/* Actions */
 .delete-actions {
   display: flex;
   flex-wrap: wrap;
@@ -92,7 +89,6 @@ app-sidebar {
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* Panel */
 .panel {
   background: white;
   border-radius: 14px;
@@ -113,7 +109,6 @@ app-sidebar {
   color: #1e293b;
 }
 
-/* Search */
 .search-box {
   width: 95%;
   padding: 12px;
@@ -129,7 +124,7 @@ app-sidebar {
   box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
 }
 
-/* Table */
+
 .shared-table {
   width: 100%;
   border-collapse: collapse;
@@ -156,7 +151,7 @@ app-sidebar {
   font-size: 15px;
 }
 
-/* Pagination */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -186,7 +181,7 @@ app-sidebar {
   font-weight: bold;
 }
 
-/* Toast - Top with animation */
+
 .toast {
   position: fixed;
   top: 25px;
@@ -211,7 +206,6 @@ app-sidebar {
 .toast.error { background: linear-gradient(135deg, #ef4444, #991b1b); }
 .toast.info { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
 
-/* Empty State */
 .empty {
   text-align: center;
   color: #6b7280;
@@ -220,13 +214,13 @@ app-sidebar {
   font-style: italic;
 }
 
-/* Animations */
+
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+
 @media(max-width: 768px) {
   .delete-header h1 { font-size: 24px; }
   .delete-actions { flex-direction: column; align-items: stretch; }

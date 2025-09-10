@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FindUsername } from './find-username';
+import { ForgotUsernameComponent } from './find-username';
 
 describe('FindUsername', () => {
-  let component: FindUsername;
-  let fixture: ComponentFixture<FindUsername>;
+  let component: ForgotUsernameComponent;
+  let fixture: ComponentFixture<ForgotUsernameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FindUsername]
-    })
-    .compileComponents();
+      imports: [ForgotUsernameComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(FindUsername);
+    fixture = TestBed.createComponent(ForgotUsernameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

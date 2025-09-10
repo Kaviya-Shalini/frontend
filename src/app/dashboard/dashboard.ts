@@ -11,7 +11,7 @@ interface FetchFileResponse {
   description: string;
   category: string;
   customCategory?: string;
-  createdAt: string; // ✅ actual field from backend
+  createdAt: string; // actual field from backend
 }
 
 interface FetchFilesResponse {
@@ -239,7 +239,7 @@ export class DashboardComponent implements OnInit {
             ],
           };
 
-          // 🔥 Most Uploaded Trend (top category uploads over days)
+          // Most Uploaded Trend (top category uploads over days)
           const topCategory = this.categoryStats.sort((a, b) => b.value - a.value)[0]?.label;
           if (topCategory) {
             const trendData = last12Days.map(

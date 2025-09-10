@@ -45,7 +45,7 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
     private router: Router,
     private paginationService: PaginationService
   ) {}
-  // 🟢 Guide State for Received Files Page
+  // Guide State for Received Files Page
   showGuide = false;
   currentStep = 0;
 
@@ -68,7 +68,7 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  // 🟢 Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;
@@ -165,7 +165,6 @@ export class ReceivedFilesComponent implements OnInit, AfterViewInit {
     return rangeWithDots;
   }
 
-  /** Template-safe helpers to avoid arithmetic on string '...' */
   isActivePage(page: number | string): boolean {
     return typeof page === 'number' ? page - 1 === this.currentPage : false;
   }

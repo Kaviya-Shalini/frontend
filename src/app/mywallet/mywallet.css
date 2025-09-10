@@ -125,7 +125,7 @@
 .download-options {
   display: flex;
   justify-content: center;
-  gap: 12px;       /* 🟢 adds spacing between Encrypted & Decrypted */
+  gap: 12px;       /* adds spacing between Encrypted & Decrypted */
   margin-top: 2px;
   flex-wrap: wrap; /* keeps them from overflowing on small screens */
 }
@@ -273,7 +273,7 @@
   transform: scale(1.1);
 }
 
-/* 🟢 Guide Overlay (same as before) */
+
 .guide-overlay {
   position: fixed;
   top: 0;
@@ -349,10 +349,10 @@
   color: #ef4444;
 }
 .highlight {
-  background-color: #563dae !important; /* bright yellow */
+  background-color: #563dae !important; 
   color: #ffffff !important;
-  box-shadow: 0 0 25px  #563dae, 0 0 40px  #563dae; /* glowing effect */
-  transform: scale(1.1); /* make it slightly bigger */
+  box-shadow: 0 0 25px  #563dae, 0 0 40px  #563dae; 
+  transform: scale(1.1); 
   transition: transform 0.3s ease-in-out, background-color 0.5s ease, box-shadow 0.5s ease;
   animation: pulseHighlight 1s ease-in-out infinite;
 }

@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Sharedfiles } from './sharedfiles';
+import { SharedFilesComponent } from './sharedfiles';
 
 describe('Sharedfiles', () => {
-  let component: Sharedfiles;
-  let fixture: ComponentFixture<Sharedfiles>;
+  let component: SharedFilesComponent;
+  let fixture: ComponentFixture<SharedFilesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Sharedfiles]
-    })
-    .compileComponents();
+      imports: [SharedFilesComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Sharedfiles);
+    fixture = TestBed.createComponent(SharedFilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

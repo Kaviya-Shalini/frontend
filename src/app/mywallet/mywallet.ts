@@ -62,7 +62,7 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private cookieService: CookieService
   ) {}
-  // 🟢 Guide State for MyWallet Page
+  // Guide State for MyWallet Page
   showGuide = false; // starts hidden
   currentStep = 0;
 
@@ -89,7 +89,7 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  // 🟢 Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;
@@ -113,7 +113,7 @@ export class MyWalletComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.checkScreenSize();
-    // Read query param
+
     this.route.queryParams.subscribe((params) => {
       if (params['fileName']) {
         this.highlightFileName = params['fileName'];

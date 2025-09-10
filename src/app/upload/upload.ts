@@ -40,7 +40,7 @@ export class UploadComponent implements OnInit {
   @ViewChild('fileInputRef') fileInputRef!: ElementRef<HTMLInputElement>;
 
   constructor(private http: HttpClient) {}
-  // ✅ Guide State & Controls for Upload Page
+  // Guide State & Controls for Upload Page
   showGuide = false; // guide starts hidden
   currentStep = 0;
 
@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit {
     },
   ];
 
-  // ✅ Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;

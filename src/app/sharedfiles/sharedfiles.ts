@@ -43,7 +43,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
   @ViewChildren('cardEl') cardElements!: QueryList<ElementRef>;
   @ViewChild(SidebarComponent) sidebar!: SidebarComponent;
 
-  // ✅ Pagination
+  // Pagination
   currentPage = 0;
   totalPages = 0;
   pageSize = 6; // match backend
@@ -55,7 +55,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     private paginationService: PaginationService,
     private cookieService: CookieService
   ) {}
-  // 🟢 Guide State for Shared Files Page
+  // Guide State for Shared Files Page
   showGuide = false;
   currentStep = 0;
 
@@ -78,7 +78,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  // 🟢 Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;
@@ -129,7 +129,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     if (this.sidebar) this.sidebar.toggleSidebar();
   }
 
-  // ✅ Fetch with Pagination
+  // Fetch with Pagination
   fetchSharedFiles() {
     this.http
       .get<PaginatedResponse<SharedFile>>('http://localhost:8080/api/auth/shared-files/by-me', {
@@ -151,7 +151,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // ✅ Normal search (no pagination)
+  // Normal search (no pagination)
   searchFiles() {
     if (!this.searchQuery.trim()) {
       this.fetchSharedFiles();
@@ -238,7 +238,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     }
     return rangeWithDots;
   }
-  // ✅ Load page with pagination
+  // Load page with pagination
   loadPage() {
     this.http
       .get<PaginatedResponse<SharedFile>>('http://localhost:8080/api/auth/shared-files/by-me', {
@@ -257,7 +257,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // ✅ Pagination Controls
+  // Pagination Controls
   nextPage() {
     if (this.currentPage + 1 < this.totalPages) {
       this.currentPage++;
@@ -279,7 +279,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // ✅ Search with Pagination
+  // Search with Pagination
   searchFilesWithPagination() {
     if (!this.searchQuery.trim()) {
       this.currentPage = 0;
@@ -306,7 +306,7 @@ export class SharedFilesComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // ✅ Cookie Handling
+  // Cookie Handling
   private saveToCookies() {
     this.cookieService.set('sharedfiles_page', this.currentPage.toString());
     this.cookieService.set('sharedfiles_filter', this.filterType);

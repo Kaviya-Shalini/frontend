@@ -20,7 +20,7 @@ export class Resetpassword {
   email: string | null = '';
 
   constructor(private http: HttpClient, private router: Router) {
-    this.email = localStorage.getItem('resetEmail'); // ✅ email from forgot password
+    this.email = localStorage.getItem('resetEmail'); // email from forgot password
   }
 
   resetPassword() {

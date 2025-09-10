@@ -15,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
       </div>
     </div>
   `,
-  providers: [CookieService], // ✅ only this
+  providers: [CookieService],
 })
 export class App {
   protected readonly title = signal('frontend');

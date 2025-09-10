@@ -17,7 +17,7 @@ export class VerifyOtpComponent {
   username: string | null;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.username = localStorage.getItem('username'); // ✅ fetch username from login step
+    this.username = localStorage.getItem('username'); // fetch username from login step
   }
 
   verify() {
@@ -37,12 +37,9 @@ export class VerifyOtpComponent {
           otp: this.otp,
         },
         { withCredentials: true }
-      ) // 👈 IMPORTANT
+      )
       .subscribe({
         next: (res: any) => {
-          // Cookie will now be automatically stored by browser if backend sets it with HttpOnly
-          // You don’t need to manually save token anymore if you use cookies
-          // ✅ save OTP verification status
           localStorage.setItem('otpVerified', 'true');
           this.router.navigateByUrl('/dashboard');
         },

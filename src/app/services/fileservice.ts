@@ -30,7 +30,7 @@ export class FileService {
 
   constructor(private http: HttpClient) {}
 
-  /** ✅ Load all files and update BehaviorSubject */
+  /** Load all files and update BehaviorSubject */
   fetchAllFiles(): Observable<FilesResponse> {
     return this.http.get<FilesResponse>(`${this.baseUrl}/fetch-all`).pipe(
       tap((res) => {
@@ -41,7 +41,7 @@ export class FileService {
     );
   }
 
-  /** ✅ Update after delete */
+  /**Update after delete */
   deleteFile(id: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/delete/${id}`, {}).pipe(
       tap(() => {
@@ -51,7 +51,7 @@ export class FileService {
     );
   }
 
-  /** ✅ Add new file manually after upload */
+  /** Add new file manually after upload */
   addFile(file: FileData) {
     const updated = [...this.filesSubject.value, file];
     this.filesSubject.next(updated);

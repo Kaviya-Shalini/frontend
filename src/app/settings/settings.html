@@ -21,11 +21,11 @@
               <div class="row">
                 <span class="lbl">Email</span><span class="val">{{ user?.email }}</span>
               </div>
-              <!-- 🟢 Public Key -->
+              <!--Public Key -->
     <h3 class="key-header">🔑 Download Your Public Key</h3>
     <button class="btn btn-key" (click)="downloadKey('public')">Download Public Key</button>
 
-    <!-- 🟢 Private Key -->
+    <!--Private Key -->
     <h3 class="key-header">🔒 Download Your Private Key</h3>
     <button class="btn btn-danger" (click)="downloadKey('private')">Download Private Key</button>
             </ng-container>
@@ -81,12 +81,12 @@
           </div>
         </div>
       </div>
-        <!-- 🟢 Help Icon -->
+        <!-- Help Icon -->
 <div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">
   ❔
 </div>
 
-<!-- 🟢 Guide Overlay -->
+<!--Guide Overlay -->
 <div class="guide-overlay" *ngIf="showGuide">
   <div class="guide-box">
     <h2>{{ steps[currentStep].title }}</h2>

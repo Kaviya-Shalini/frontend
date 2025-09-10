@@ -16,7 +16,7 @@ export interface PaginatedResponse<T> {
   providedIn: 'root',
 })
 export class PaginationService {
-  private baseUrl = 'http://localhost:8080/api'; // ✅ change to your backend base URL
+  private baseUrl = 'http://localhost:8080/api'; //
 
   constructor(private http: HttpClient) {}
 

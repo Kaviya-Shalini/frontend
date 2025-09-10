@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
 
   logoutOk = false;
   error: string | null = null;
-  // 🟢 Guide State for Settings Page
+  //Guide State for Settings Page
   showGuide = false;
   currentStep = 0;
 
@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
     },
   ];
 
-  // 🟢 Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;
@@ -75,9 +75,7 @@ export class SettingsComponent implements OnInit {
     this.showGuide = false;
   }
 
-  ngOnInit(): void {
-    // Do nothing on init. Lazy load when expanded.
-  }
+  ngOnInit(): void {}
 
   toggle(key: keyof typeof this.open) {
     this.open[key] = !this.open[key];
@@ -127,7 +125,7 @@ export class SettingsComponent implements OnInit {
 
     this.http
       .get(endpoint, {
-        responseType: 'blob', // 🔑 download as file
+        responseType: 'blob',
         withCredentials: true,
       })
       .subscribe({

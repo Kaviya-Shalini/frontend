@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <!-- 🟢 Help Icon -->
+  <!--  Help Icon -->
   <div
     class="guide-icon"
     title="Click here to view the user guide for this page"
@@ -112,7 +112,7 @@
     ❔
   </div>
 
-  <!-- 🟢 Education Icon with Suggestion -->
+  <!-- Education Icon with Suggestion -->
   <div class="education-wrapper">
     <div
       class="education-icon"
@@ -129,11 +129,10 @@
     </div>
   </div>
 
-  <!-- 🟢 Guide Overlay -->
-   <!-- 🟢 Help Icon -->
+  
   <div class="guide-icon" title="Click here to view the user guide for this page" (click)="openGuide()">❔</div>
 
-  <!-- 🟢 Education Icon with Suggestion -->
+  <!-- Education Icon with Suggestion -->
   <div class="education-wrapper">
     <div class="education-icon" title="Click here to learn about cybersecurity & app security" (click)="openEducation()">📘</div>
     <div class="edu-suggestion" *ngIf="showEduSuggestion">
@@ -142,7 +141,7 @@
     </div>
   </div>
 
-  <!-- 🟢 Guide Overlay -->
+  <!-- Guide Overlay -->
   <div class="guide-overlay" *ngIf="showGuide">
     <div class="guide-box">
       <h2>{{ steps[currentStep].title }}</h2>

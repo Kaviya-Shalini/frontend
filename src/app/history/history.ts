@@ -33,7 +33,7 @@ export class HistoryComponent implements OnInit {
   loading = true;
   error = '';
 
-  // ✅ frontend uses 0-based indexing
+  // frontend uses 0-based indexing
   pageNumber = 0;
   pageSize = 5;
   totalPages = 0;
@@ -41,7 +41,7 @@ export class HistoryComponent implements OnInit {
   lastPage = false;
 
   constructor(private http: HttpClient) {}
-  // 🟢 Guide State for History Page
+  // Guide State for History Page
   showGuide = false;
   currentStep = 0;
 
@@ -72,7 +72,7 @@ export class HistoryComponent implements OnInit {
           this.totalPages = 0;
           this.pageNumber = 0;
           this.lastPage = true;
-          this.fetchActivities(); // refresh list
+          this.fetchActivities();
         },
         error: () => {
           this.error = 'Failed to clear logs ❌';
@@ -80,7 +80,7 @@ export class HistoryComponent implements OnInit {
       });
   }
 
-  // 🟢 Guide Controls
+  // Guide Controls
   openGuide() {
     this.showGuide = true;
     this.currentStep = 0;

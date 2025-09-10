@@ -9,12 +9,11 @@ export class AuthGuard implements CanActivate {
   constructor(private cookieService: CookieService, private router: Router) {}
 
   canActivate(): boolean | UrlTree {
-    // const hasJwt = this.cookieService.check('jwt_token'); // ✅ backend session
-    const username = localStorage.getItem('username'); // ✅ frontend username
-    const otpVerified = localStorage.getItem('otpVerified'); // ✅ OTP step
+    const username = localStorage.getItem('username'); //frontend username
+    const otpVerified = localStorage.getItem('otpVerified'); // OTP step
 
     if (username && otpVerified === 'true') {
-      return true; // all good → allow access
+      return true;
     }
 
     // ❌ not logged in or OTP not verified → go to login

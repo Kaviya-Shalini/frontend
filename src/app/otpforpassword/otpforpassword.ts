@@ -19,7 +19,7 @@ export class otpforpasswordreset {
   verify() {
     this.http.post('http://localhost:8080/api/auth/user-utils/reset', { otp: this.otp }).subscribe({
       next: () => {
-        this.router.navigateByUrl('/confirmpassword'); // ✅ go to reset password page
+        this.router.navigateByUrl('/confirmpassword'); // go to reset password page
       },
       error: (err) => (this.error = err?.error?.message || 'OTP verification failed'),
     });

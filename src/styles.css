@@ -78,8 +78,8 @@
 
 
 :host ::ng-deep app-sidebar .sidebar {
-  background: #ffffff !important;  /* ✅ white background */
-  color: #111827 !important;       /* ✅ dark text */
+  background: #ffffff !important;  
+  color: #111827 !important;     
 }
 h1{
     font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;

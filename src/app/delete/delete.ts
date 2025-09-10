@@ -79,7 +79,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
     this.router.navigate(['/mywallet']);
   }
 
-  // -------- API calls --------
   fetchRecipients(): void {
     this.isLoading = true;
     this.errorMsg = '';
@@ -110,7 +109,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
     return this.usernames.filter((u) => u.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
 
-  // ✅ Delete for Me
   deleteForMe(): void {
     this.http
       .delete(`http://localhost:8080/api/auth/files/delete/${this.fileId}`, {
@@ -129,8 +127,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
       });
   }
 
-  // ✅ Delete for Everyone
-  // ✅ Delete for Everyone
   deleteForEveryone(): void {
     this.http
       .delete(`http://localhost:8080/api/auth/files/delete/${this.fileId}`, {
@@ -156,7 +152,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
       });
   }
 
-  // ✅ Delete for Selected Users
   deleteForSelectedUsers(): void {
     const usernamesArray = Array.from(this.selected);
 
@@ -185,7 +180,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
       });
   }
 
-  // -------- selection + localStorage --------
   toggle(username: string): void {
     if (this.selected.has(username)) {
       this.selected.delete(username);
@@ -224,7 +218,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
     }
   }
 
-  // -------- pagination helpers --------
   paginationRange(): (number | string)[] {
     const total = this.totalPages;
     const current = this.pageNumber;
@@ -287,7 +280,6 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
     }
   }
 
-  // -------- toasts --------
   private showToast(msg: string, type: 'success' | 'error' | 'info'): void {
     this.toastMsg = msg;
     this.toastType = type;
