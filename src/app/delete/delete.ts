@@ -52,7 +52,7 @@ export class DeleteFileComponent implements OnInit, OnDestroy {
   get selectedArray(): string[] {
     return Array.from(this.selected);
   }
-
+  //constructors
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
