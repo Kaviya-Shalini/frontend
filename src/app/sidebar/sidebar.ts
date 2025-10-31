@@ -35,6 +35,8 @@ export class SidebarComponent implements OnInit {
     this.sidebarToggle.emit(this.isClosed);
   }
 
+  //
+
   logout() {
     localStorage.clear();
     window.location.href = '/';
