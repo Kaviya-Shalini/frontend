@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   isClosed = false;
 
   @Output() sidebarToggle = new EventEmitter<boolean>();
+  //sdfadf
 
   ngOnInit() {
     this.checkScreenSize();
