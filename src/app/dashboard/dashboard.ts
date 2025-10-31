@@ -117,10 +117,11 @@ export class DashboardComponent implements OnInit {
       this.showEduSuggestion = false;
     }, 6000);
   }
-
+  //hostlistener
   @HostListener('window:resize') onResize() {
     this.checkScreenSize();
   }
+  //check screen size
   checkScreenSize() {
     this.isSidebarClosed = window.innerWidth <= 992;
   }
